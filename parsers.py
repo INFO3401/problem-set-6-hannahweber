@@ -46,7 +46,7 @@ def countWordsUnstructured(filename):
 
 # Test your part 1 code below.
 
-countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt")
+#countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt")
 
 ################################################################################
 # PART 2
@@ -61,11 +61,19 @@ countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt")
 import csv 
 
 def generateSimpleCSV(targetfile, wordCounts): 
+    
+    #open a file as a csv_file
     with open(targetfile, "w") as csv_file:
+        
+        #writing the content of the csv
         writer = csv.writer(csv_file)
+        
+        #make the header row
         writer.writerow(["word", "count"])
-    for key, value in wordCounts.items():
-        writer.writerow([key, value[0], value[1]])
+        
+        #transform the word count dictionary to a csv
+        for key, value in wordCounts.items():
+            writer.writerow([key, value[0]])
         
 # 
     
