@@ -20,28 +20,22 @@ def countWordsUnstructured(filename):
             wordCounts[word] = 1
         else:
             wordCounts[word] += 1
-    print (wordCounts)
     return wordCounts
 
 # Prof Danielle's solution    
 #def countWordsUnstructured(filename):
-    
     #initialize a word count dictionary
 #    wordCounts = {}
-    
     #open a file and read it
 #    datafile = open(filename).read()
-    
     #open the file and read it
 #    data = datafile.split()
-    
     #count the words
 #    for word in data:
 #        if word in wordCounts:
 #            wordCounts[word] = wordCounts[word] + 1
 #        else:
-#            wordCounts[word] = 1
-            
+#            wordCounts[word] = 1    
     #return the word count dictionary
 #    return wordCounts
 
@@ -68,7 +62,6 @@ def generateSimpleCSV(targetfile, wordCounts):
     
     #open a file as a csv_file
     with open(targetfile, "w") as csv_file:
-        #define what fields you are looking for
                 
         #create the csv
         writer = csv.writer(csv_file)
@@ -89,12 +82,11 @@ def generateSimpleCSV(targetfile, wordCounts):
     
 # Test your part 2 code below
 
-generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt"))
-
-#generateSimpleCSV('didthiswork', wordCounts)
+#generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt"))
 
 ################################################################################
 # PART 3
+# https://www.tutorialspoint.com/python/os_listdir.htm
 ################################################################################
     # This function should create a dictionary of word count dictionaries
     # The dictionary should have one dictionary per file in the directory
@@ -103,28 +95,36 @@ generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corp
     # Outputs: A dictionary containing a word count dictionary for each
     #          text file in the directory
     
-#from os import lisdir
+import os
+from os import listdir
     
-#def countWordsMany(directory): 
+def countWordsMany(directory): 
     
     #open directory and pull the list of file names
+    #path = ('/Users/hannahweber/Dropbox/problem-set-6-hannahweber/state-of-the-union-corpus-1989-2017')
+    #path = ('state-of-the-union-corpus-1989-2017')
+    directory_list = os.listdir(directory)
     
     #create an empty dictionary for the big dictionary of word count dictionaries
-    #wordCountDict = {}
+    wordCountDict = {}
         
     #iterate through the entries and create the dictionary containing the other word count dictionaries for each text file entry
     #loop through the list of files
-        
-        #for each file, call wordCounts function above for each file
-        
+            #for each file, call wordCounts function above for each file
+    
+    for file in directory_list:
+        eachWordCount = countWordsUnstructured(file)
+    
         #place the word count dictionary into the empty dictionary
+        wordCountDict[file] += eachWordCount
 
     #return the big dictionary
-    #return wordCountDict
-
+    return wordCountDict
+    
 # Test your part 3 code below
 
-#countWordsMany("state-of-the-union-corpus-1989-2017")
+big_dictionary = countWordsMany("state-of-the-union-corpus-1989-2017")
+print(big_dictionary)
 
 ################################################################################
 # PART 4
