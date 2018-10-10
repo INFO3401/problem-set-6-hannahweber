@@ -70,7 +70,6 @@ def generateSimpleCSV(targetfile, wordCounts):
         #define what fields you are looking for
         myFields = ['Word', 'Count']
         
-        writer.writerow(["word", "count"])
         #create the csv
         writer = csv.DictWriter(csv_file, fieldnames = myFields)
         
