@@ -46,12 +46,14 @@ def countWordsUnstructured(filename):
 
 # Test your part 1 code below.
 
-#countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt")
+countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt")
 
 ################################################################################
 # PART 2
+# https://stackoverflow.com/questions/3086973/how-do-i-convert-this-list-of-dictionaries-to-a-csv-file
+# https://stackabuse.com/reading-and-writing-csv-files-in-python/
+# collab with Marissa and Taylor
 ################################################################################
-
     # This function should transform a dictionary containing word counts to a
     # CSV file. The first row of the CSV should be a header noting: 
     # Word, Count
@@ -65,26 +67,34 @@ def generateSimpleCSV(targetfile, wordCounts):
     #open a file as a csv_file
     with open(targetfile, "w") as csv_file:
         
-        #writing the content of the csv
-        writer = csv.writer(csv_file)
+        #define what fields you are looking for
+        myFields = ['Word', 'Count']
+        
+        writer.writerow(["word", "count"])
+        #create the csv
+        writer = csv.DictWriter(csv_file, fieldnames = myFields)
         
         #make the header row
-        writer.writerow(["word", "count"])
+        writer.writeheader()
         
-        #transform the word count dictionary to a csv
-        for key, value in wordCounts.items():
-            writer.writerow([key, value[0]])
-        
+        #transform the word count dictionary to the content of the csv
+        for key,value in wordCounts.items():
+            writer.writerow({'key' : 'value'})
+            
+        #return the CSV file
+        return csv_file
+            
+        # GETTING ERROR - AttributeError: 'NoneType' object has no attribute 'items'
+        # STUCK BECAUSE IT ISN'T RECOGNIZING THE WORD COUNT DICTIONARY THAT IS BEING CREATED ABOVE IN PART 1
 # 
     
 # Test your part 2 code below
 
-generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt"))
+#generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corpus-1989-2017/Bush_1989.txt"))
 
 ################################################################################
 # PART 3
 ################################################################################
-#def countWordsMany(directory): 
     # This function should create a dictionary of word count dictionaries
     # The dictionary should have one dictionary per file in the directory
     # Each entry in the dictionary should be a word count dictionary
@@ -92,7 +102,21 @@ generateSimpleCSV('didthiswork', countWordsUnstructured("state-of-the-union-corp
     # Outputs: A dictionary containing a word count dictionary for each
     #          text file in the directory
     
+def countWordsMany(directory): 
+    
+    #create an empty dictionary for the big dictionary of word count dictionaries
+    wordCountDict = {}
+    
+    #iterate through the entries and create the dictionary containing the other word count dictionaries for each text file entry
+    for file in directory:
+            wordCountDict[file] = wordCounts
+        
+    #return the big dictionary
+    return wordCountDict
+
 # Test your part 3 code below
+
+countWordsMany("state-of-the-union-corpus-1989-2017")
 
 ################################################################################
 # PART 4
