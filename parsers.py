@@ -98,11 +98,11 @@ def generateSimpleCSV(targetfile, wordCounts):
 import os
 from os import listdir
 #directory = '/Users/hannahweber/Dropbox/problem-set-6-hannahweber/state-of-the-union-corpus-1989-2017'
-    
+
 def countWordsMany(directory): 
     
     #open directory and pull the list of file names
-    directory_list = os.listdir(directory)
+    directory_list = listdir(directory)
     
     #create an empty dictionary for the big dictionary of word count dictionaries
     wordCountDict = {}
@@ -112,19 +112,18 @@ def countWordsMany(directory):
             #for each file, call wordCounts function above for each file
     
     for file in directory_list:
-        eachWordCount = countWordsUnstructured(file)
+        eachWordCount = countWordsUnstructured(directory + "/" + file)
     
         #place the word count dictionary into the empty dictionary
-        wordCountDict[file] += eachWordCount
+        wordCountDict[file] = eachWordCount
 
     #return the big dictionary
     return wordCountDict
     
 # Test your part 3 code below
 
-#big_dictionary = countWordsMany("state-of-the-union-corpus-1989-2017")
-big_dictionary = countWordsMany('/Users/hannahweber/Dropbox/problem-set-6-hannahweber/state-of-the-union-corpus-1989-2017/')
-print(big_dictionary)
+#big_dictionary = countWordsMany('./state-of-the-union-corpus-1989-2017')
+#print(big_dictionary)
 
 ################################################################################
 # PART 4
@@ -135,28 +134,28 @@ print(big_dictionary)
     # Inputs: A word count dictionary and a name for the target file
     # Outputs: A CSV file named targetfile containing the word count data
     
-#import csv 
+import csv 
 
-#def generateDirectoryCSV(wordCounts, targetfile): 
+def generateDirectoryCSV(wordCounts, targetfile): 
     
     #open a file as a csv_file
-#    with open(targetfile, "w") as csv_file:
+    with open(targetfile, "w") as csv_file:
                 
         #create the csv
-#       writer = csv.writer(csv_file)
-        
+        writer = csv.writer(csv_file)
+         
         #make the header row
-#        writer.writerow(['Word', 'Count'])
+        writer.writerow(['Filename', 'Word', 'Count'])
         
         #transform the word count directory to the content of the csv
-#       for key,value in wordCounts.items():
-#            writer.writerow([key, value])
+        for key,value in wordCounts.items():
+            writer.writerow([key, value])
             
     #close file
-#    csv_file.close()
+    csv_file.close()
         
     #return the CSV file
-#    return csv_file
+    return csv_file
 # 
     
 # Test your part 4 code below
@@ -174,34 +173,32 @@ print(big_dictionary)
     # Inputs: A word count dictionary and a name for the target file
     # Outputs: An JSON file named targetfile containing the word count data
 
-#import json
+import json
 
-#def generateJSONFile(wordCounts, targetfile): 
+def generateJSONFile(wordCounts, targetfile): 
 
     #open a file as a json_file
-#    with open(targetfile, "r+") as json_file:
+    with open(targetfile, "r+") as json_file:
 
         #create the json
-#        writer = json.load(json_file)
-        
-        #make the header row
-#        writer.writerow(['Filename', 'Word', 'Count'])
-        
+        writer = json.loads(json_file)
+                
         #get the word count directory to a usable form for this function
-#        writer.update(wordCounts)
+        writer.update(wordCounts)
+        #json_file.update(wordCounts)
 
         #transform the word count directory to the content of the json
-#        json.dump(writer, json_file)
+        json.dump(writer, json_file)
         
     #close file
-#    json_file.close()
+    json_file.close()
         
     #return the json file
-#    return json_file
+    return json_file
 
 # Test your part 5 code below
 
-#generateJSONFile(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part5file')
+generateJSONFile(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part5file')
 
 ################################################################################
 # PART 6
@@ -233,13 +230,13 @@ print(big_dictionary)
     # Inputs: An JSON file to search and a word to search for
     # Outputs: The filename containing the highest count of the target word
 
-import json
+#import json
 
-def searchJSON(JSONfile, word): 
+#def searchJSON(JSONfile, word): 
     
     #open the json file
-    file = open(JSONfile, 'r+')
-    jsonFile = json.load(file)
+#    file = open(JSONfile, 'r+')
+#    jsonFile = json.load(file)
     
     # search the file by filename to find the largest value
 #   max_count = max(jsonFile['Count'])
@@ -247,7 +244,7 @@ def searchJSON(JSONfile, word):
     #return the highest values' filename
     
     #close file
-    jsonFile.close()
+#    jsonFile.close()
 # Test your part 6 code to find which file has the highest count of a given word
 
 # +1 bonus point for figuring out how many datapoints you had to process to 
