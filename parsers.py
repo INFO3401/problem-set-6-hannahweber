@@ -123,47 +123,127 @@ def countWordsMany(directory):
     
 # Test your part 3 code below
 
-big_dictionary = countWordsMany("state-of-the-union-corpus-1989-2017")
-print(big_dictionary)
+#big_dictionary = countWordsMany("state-of-the-union-corpus-1989-2017")
+#print(big_dictionary)
 
 ################################################################################
 # PART 4
 ################################################################################
-#def generateDirectoryCSV(wordCounts, targetfile): 
     # This function should create a CSV containing the word counts generated in
     # part 3 with the header: 
     # Filename, Word, Count
     # Inputs: A word count dictionary and a name for the target file
     # Outputs: A CSV file named targetfile containing the word count data
     
+import csv 
+
+def generateDirectoryCSV(wordCounts, targetfile): 
+    
+    #open a file as a csv_file
+    with open(targetfile, "w") as csv_file:
+                
+        #create the csv
+        writer = csv.writer(csv_file)
+        
+        #make the header row
+        writer.writerow(['Word', 'Count'])
+        
+        #transform the word count directory to the content of the csv
+        for key,value in wordCounts.items():
+            writer.writerow([key, value])
+            
+    #close file
+    csv_file.close()
+        
+    #return the CSV file
+    return csv_file
+# 
+    
 # Test your part 4 code below
     
+#generateDirectoryCSV(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part4CSV')
+
 ################################################################################
 # PART 5
+#https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
+#https://stackoverflow.com/questions/31728361/append-to-dictionary-file-in-json-python
 ################################################################################
-#def generateJSONFile(wordCounts, targetfile): 
     # This function should create an containing the word counts generated in
     # part 3. Architect your JSON file such that the hierarchy will allow
     # the user to quickly navigate and compare word counts between files. 
     # Inputs: A word count dictionary and a name for the target file
     # Outputs: An JSON file named targetfile containing the word count data
-    
+
+import json
+
+def generateJSONFile(wordCounts, targetfile): 
+
+    #open a file as a json_file
+    with open(targetfile, "r+") as json_file:
+
+        #create the json
+        writer = json.load(json_file)
+        
+        #make the header row
+        writer.writerow(['Filename', 'Word', 'Count'])
+        
+        #get the word count directory to a usable form for this function
+        writer.update(wordCounts)
+
+        #transform the word count directory to the content of the json
+        json.dump(writer, json_file)
+        
+    #close file
+    json_file.close()
+        
+    #return the json file
+    return json_file
+
 # Test your part 5 code below
+
+generateJSONFile(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part5file')
 
 ################################################################################
 # PART 6
+#https://www.protechtraining.com/blog/post/737
 ################################################################################
-#def searchCSV(csvfile, word): 
     # This function should search a CSV file from part 4 and find the filename
     # with the largest count of a specified word
     # Inputs: A CSV file to search and a word to search for
     # Outputs: The filename containing the highest count of the target word
+
+import csv 
+
+def searchCSV(csvfile, word): 
     
-#def searchJSON(JSONfile, word): 
+    #open the csv file
+    file = open(csvfile)
+    csv_file = csv.reader(file)
+    
+    # search the file by filename to find the largest value
+    max_count = max(csv_file['Count'])
+        
+    #return the highest values' adjacent cell with the filename
+    
+    #close file
+
+
     # This function should search a JSON file from part 5 and find the filename
     # with the largest count of a specified word
     # Inputs: An JSON file to search and a word to search for
     # Outputs: The filename containing the highest count of the target word
+
+import json
+
+def searchJSON(JSONfile, word): 
+    
+    #open the json file
+    
+    # search the file by filename to find the largest value
+    
+    #return the highest values' filename
+    
+    #close file
     
 # Test your part 6 code to find which file has the highest count of a given word
 
