@@ -226,7 +226,7 @@ def searchCSV(csvfile, word):
     #return the highest values' adjacent cell with the filename
     
     #close file
-
+    csv_file.close()
 
     # This function should search a JSON file from part 5 and find the filename
     # with the largest count of a specified word
