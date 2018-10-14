@@ -87,6 +87,7 @@ def generateSimpleCSV(targetfile, wordCounts):
 ################################################################################
 # PART 3
 # https://www.tutorialspoint.com/python/os_listdir.htm
+# worked on in class and with Marissa and Taylor
 ################################################################################
     # This function should create a dictionary of word count dictionaries
     # The dictionary should have one dictionary per file in the directory
@@ -122,7 +123,7 @@ def countWordsMany(directory):
     
 # Test your part 3 code below
 
-#big_dictionary = countWordsMany('./state-of-the-union-corpus-1989-2017')
+big_dictionary = countWordsMany('./state-of-the-union-corpus-1989-2017')
 #print(big_dictionary)
 
 ################################################################################
@@ -147,7 +148,7 @@ def generateDirectoryCSV(wordCounts, targetfile):
         #make the header row
         writer.writerow(['Filename', 'Word', 'Count'])
         
-        #transform the word count directory to the content of the csv
+        #iterate through the word count directory and add to the csv
         for key,value in wordCounts.items():
             writer.writerow([key, value])
             
@@ -166,8 +167,9 @@ def generateDirectoryCSV(wordCounts, targetfile):
 # PART 5
 #https://stackabuse.com/reading-and-writing-json-to-a-file-in-python/
 #https://stackoverflow.com/questions/31728361/append-to-dictionary-file-in-json-python
+#worked with Taylor and Marissa and Steven
 ################################################################################
-    # This function should create an containing the word counts generated in
+    # This function should create a JSON containing the word counts generated in
     # part 3. Architect your JSON file such that the hierarchy will allow
     # the user to quickly navigate and compare word counts between files. 
     # Inputs: A word count dictionary and a name for the target file
@@ -178,31 +180,25 @@ import json
 def generateJSONFile(wordCounts, targetfile): 
 
     #open a file as a json_file
-    with open(targetfile, "r+") as json_file:
-
-        #create the json
-        writer = json.loads(json_file)
+    with open(targetfile, "w") as json_file:
                 
-        #get the word count directory to a usable form for this function
-        writer.update(wordCounts)
-        #json_file.update(wordCounts)
-
         #transform the word count directory to the content of the json
-        json.dump(writer, json_file)
+        json_file.write(str(wordCounts).replace("\'", "\""))
+
+        #close file
+        json_file.close()
         
-    #close file
-    json_file.close()
-        
-    #return the json file
-    return json_file
+        #return the json file
+        return json_file
 
 # Test your part 5 code below
 
-generateJSONFile(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part5file')
+generateJSONFile(big_dictionary, 'part5file')
 
 ################################################################################
 # PART 6
 #https://www.protechtraining.com/blog/post/737
+#worked with Taylor and Marissa
 ################################################################################
     # This function should search a CSV file from part 4 and find the filename
     # with the largest count of a specified word
@@ -214,16 +210,16 @@ generateJSONFile(countWordsMany("state-of-the-union-corpus-1989-2017"), 'part5fi
 #def searchCSV(csvfile, word): 
     
     #open the csv file
-#    file = open(csvfile)
-#    csv_file = csv.reader(file)
+    #file = open(csvfile)
+    #csv_file = csv.reader(file)
     
     # search the file by filename to find the largest value
-#    max_count = max(csv_file['Count'])
+    #max_count = max(csv_file['Count'])
         
     #return the highest values' adjacent cell with the filename
     
     #close file
-#    csv_file.close()
+    #csv_file.close()
 
     # This function should search a JSON file from part 5 and find the filename
     # with the largest count of a specified word
