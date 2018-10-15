@@ -98,7 +98,6 @@ def generateSimpleCSV(targetfile, wordCounts):
     
 import os
 from os import listdir
-#directory = '/Users/hannahweber/Dropbox/problem-set-6-hannahweber/state-of-the-union-corpus-1989-2017'
 
 def countWordsMany(directory): 
     
@@ -197,8 +196,7 @@ def generateJSONFile(wordCounts, targetfile):
 
 ################################################################################
 # PART 6
-#https://www.protechtraining.com/blog/post/737
-#worked with Taylor and Marissa
+#worked with Taylor and Marissa and Jacob
 ################################################################################
     # This function should search a CSV file from part 4 and find the filename
     # with the largest count of a specified word
@@ -207,23 +205,25 @@ def generateJSONFile(wordCounts, targetfile):
 
 import csv 
 
-def searchCSV(csvfile, word): 
+def searchCSV(csvfile, word):
+    
+    #set the variables to use later
+    largest_count_file = ""
+    largest_count = 0
     
     #open the csv file
     with open(csvfile) as csv_file:
         file = csv.reader(csv_file)
     
-    largest_count_file = ""
-    largest_count = 0
-    
     #make a loop for finding the file that has the highest count for that word
-    for line in file:
-        #lines_processed += 1
-        if line[1] == word and int(line[2]) > int(largest_count)
-            largest_count = line[2]
+        for line in file:
+            if line[1] == word and int(line[2]) > int(largest_count):
+                largest_count = line[2]
+                largest_count_file = line[0]
                 
-        
-    #return the highest values' adjacent cell with the filename
+    #return the file with the largest wordcounts
+    return largest_count_file
+
     
     #close file
     csv_file.close()
@@ -233,21 +233,33 @@ def searchCSV(csvfile, word):
     # Inputs: An JSON file to search and a word to search for
     # Outputs: The filename containing the highest count of the target word
 
-#import json
+import json
 
 def searchJSON(JSONfile, word): 
     
+    #set the variables to use later
+    largest_count_file = ""
+    largest_count = 0
+    
     #open the json file
     with open(JSONfile) as json_file:
-        jfile = json.load(json_file)
+        data = json.load(json_file)
         
-    # search the file by value to find the largest value
-
-    #return the highest values' filename
+    #make a loop for finding the file that has the highest count for that word
+        for file in data:
+            if data[file][word] > largest_count:
+                largest_count = data[file][word]
+                largest_count_file = file
+        
+    #return the json file with the largest wordcounts
+    return largest_count_file
     
     #close file
+    json_file.close()
     
 # Test your part 6 code to find which file has the highest count of a given word
+#print(searchCSV("part4CSV", "on"))
+#print(searchJSON("part5file", "on"))
 
 # +1 bonus point for figuring out how many datapoints you had to process to 
 # compute this value
@@ -257,15 +269,15 @@ def searchJSON(JSONfile, word):
 #worked with Taylor and Marissa and Jacob
 ################################################################################
 
-import sqlite3
+#import sqlite3
 
 #set up a connection to the database
-conn = sqlite3.connect('presidents_speech.db')
-c = conn.cursor()
+#conn = sqlite3.connect('presidents_speech.db')
+#c = conn.cursor()
 
 #ask the connection to execute a SQL statement
-c.execute('''CREATE TABLE wordCounts (filename, word, counts)''')
-c.execute('''CREATE TABLE presidentInformation (index, number, start, end, president_name, prior_occupation, party, VP)''')
+#c.execute('''CREATE TABLE wordCounts (filename, word, counts)''')
+#c.execute('''CREATE TABLE presidentInformation (index, number, start, end, president_name, prior_occupation, party, VP)''')
 
 #the tables could be joined on president name or year of their presidency 
 # Table 1 - wordCounts
@@ -283,7 +295,7 @@ c.execute('''CREATE TABLE presidentInformation (index, number, start, end, presi
     #text VP
     
 #save the changes
-conn.commit()
+#conn.commit()
 
 #close the connection
-conn.close()
+#conn.close()
